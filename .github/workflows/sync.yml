@@ -22,11 +22,11 @@ jobs:
       # Step 2: Push Changes to Fork
       - name: Push Changes to Fork
         env:
-          TOKEN: ${{ secrets.pat }}
+          TOKEN: ${{ secrets.OTTODEV }}  # Referencing the stored token
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git push https://${TOKEN}@github.com/Cyopsys/ottodev.git main
+          git push https://${TOKEN}@github.com/${{ github.repository }}.git main
 
       # Step 3: Merges upstream changes (if any)
       - name: Add Upstream
