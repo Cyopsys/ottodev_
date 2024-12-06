@@ -1,25 +1,51 @@
-name: Sync with Upstream
+name: Sync, Build, and Deploy
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight UTC
-  workflow_dispatch: # Allow manual triggering
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+  push:
+    branches:
+      - main  # Runs on push to main branch
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
-  sync:
+  sync_and_deploy:
     runs-on: ubuntu-latest
+
     steps:
+      # Step 1: Checkout the fork (sync repository)
       - name: Checkout Fork
         uses: actions/checkout@v3
         with:
           ref: main # Replace with the default branch of your fork
-      
-      - name: Add Upstream
+
+      # Step 2: Add upstream and sync with upstream
+      - name: Add Upstream and Fetch Changes
         run: |
           git remote add upstream https://github.com/coleam00/bolt.new-any-llm
           git fetch upstream
           git merge upstream/main -m "Merge upstream changes" || echo "No changes to merge"
-      
-      - name: Push Changes to Fork
+
+      # Step 3: Check if sync.yml exists before proceeding
+      - name: Check for sync.yml file
         run: |
-          git push origin main # Push merged changes to your fork
+          if [ ! -f .github/workflows/sync.yml ]; then
+            echo "sync.yml is missing! Aborting deployment."
+            exit 1
+          fi
+
+      # Step 4: Install dependencies (if needed)
+      - name: Install dependencies
+        run: |
+          npm install
+
+      # Step 5: Build the project
+      - name: Build project
+        run: |
+          npm run build
+
+      # Step 6: Deploy to Cloudflare Pages (or any other platform)
+      - name: Deploy to Cloudflare Pages
+        run: |
+          # Add deployment commands here (e.g., to Cloudflare Pages)
+          echo "Deploying to Cloudflare Pages..."
