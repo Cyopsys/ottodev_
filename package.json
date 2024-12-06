@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "deploy": "npm run build && wrangler pages deploy",
-    "build": "rm -f .tool-versions && npm install -g pnpm && remix vite:build",
+    "build": "remix vite:build",
     "dev": "remix vite:dev",
     "test": "vitest --run",
     "test:watch": "vitest",

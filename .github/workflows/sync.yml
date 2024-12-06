@@ -16,18 +16,34 @@ jobs:
       # Step 1: Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: main
 
-      # Step 2: Install dependencies (should be from root where package.json is)
+      # Step 2: Merges upstream changes (if any)
+      - name: Add Upstream
+        run: |
+          git remote add upstream https://github.com/coleam00/bolt.new-any-llm
+          git fetch upstream
+          git merge upstream/main -m "Merge upstream changes" || { echo "Merge conflict detected or no changes"; exit 1; }
+
+      # Step 3: Push changes to your fork
+      - name: Push Changes to Fork
+        run: |
+          git push origin main
+
+      # Step 4: Install dependencies (use npm ci for CI/CD)
       - name: Install dependencies
         run: |
-          npm install
+          npm ci
 
-      # Step 3: Build the project (using whatever build tool, like Vite, Remix)
+      # Step 5: Build the project (using whatever build tool, like Vite, Remix)
       - name: Build project
         run: |
           npm run build
 
-      # Step 4: Deploy to Cloudflare Pages (can use wrangler or any deploy command)
+      # Step 6: Deploy to Cloudflare Pages (replace with your actual deploy command)
       - name: Deploy to Cloudflare Pages
         run: |
           echo "Deploying to Cloudflare Pages..."
+          # Replace this with the actual deployment command, like `wrangler publish` or similar
+          # wrangler publish
