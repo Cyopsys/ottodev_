@@ -5,7 +5,7 @@ on:
     - cron: '0 0 * * *'  # Runs daily at midnight UTC
   push:
     branches:
-      - main  # Runs on push to main branch
+      - main  # Runs on push to the main branch
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
@@ -17,34 +17,38 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          ref: main
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-      # Step 2: Merges upstream changes (if any)
-      - name: Add Upstream
+      # Step 2: Configure Git (Set bot user for commit attribution)
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Step 3: Add Upstream and Merge Changes
+      - name: Add Upstream and Merge
         run: |
           git remote add upstream https://github.com/coleam00/bolt.new-any-llm
           git fetch upstream
           git merge upstream/main --allow-unrelated-histories -m "Merge upstream changes" || echo "Merge conflict detected or no changes"
 
-
-      # Step 3: Push changes to your fork
+      # Step 4: Push Changes to Fork
       - name: Push Changes to Fork
+        env:
+          TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          git push origin main
+          git push https://${TOKEN}@github.com/Cyopsys/ottodev.git main || echo "No changes to push"
 
-      # Step 4: Install dependencies (use npm ci for CI/CD)
+      # Step 5: Install dependencies (use npm ci for a clean slate)
       - name: Install dependencies
-        run: |
-          npm ci
+        run: npm ci
 
-      # Step 5: Build the project (using whatever build tool, like Vite, Remix)
+      # Step 6: Build the project
       - name: Build project
-        run: |
-          npm run build
+        run: npm run build
 
-      # Step 6: Deploy to Cloudflare Pages (replace with your actual deploy command)
+      # Step 7: Deploy to Cloudflare Pages
       - name: Deploy to Cloudflare Pages
         run: |
           echo "Deploying to Cloudflare Pages..."
-          # Replace this with the actual deployment command, like `wrangler publish` or similar
-          # wrangler publish
+          # Placeholder to document the deployment process.
