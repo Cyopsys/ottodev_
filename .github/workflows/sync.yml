@@ -13,39 +13,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the fork (sync repository)
-      - name: Checkout Fork
+      # Step 1: Checkout the repository
+      - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          ref: main # Replace with the default branch of your fork
 
-      # Step 2: Add upstream and sync with upstream
-      - name: Add Upstream and Fetch Changes
-        run: |
-          git remote add upstream https://github.com/coleam00/bolt.new-any-llm
-          git fetch upstream
-          git merge upstream/main -m "Merge upstream changes" || echo "No changes to merge"
-
-      # Step 3: Check if sync.yml exists before proceeding
-      - name: Check for sync.yml file
-        run: |
-          if [ ! -f .github/workflows/sync.yml ]; then
-            echo "sync.yml is missing! Aborting deployment."
-            exit 1
-          fi
-
-      # Step 4: Install dependencies (if needed)
+      # Step 2: Install dependencies (should be from root where package.json is)
       - name: Install dependencies
         run: |
           npm install
 
-      # Step 5: Build the project
+      # Step 3: Build the project (using whatever build tool, like Vite, Remix)
       - name: Build project
         run: |
           npm run build
 
-      # Step 6: Deploy to Cloudflare Pages (or any other platform)
+      # Step 4: Deploy to Cloudflare Pages (can use wrangler or any deploy command)
       - name: Deploy to Cloudflare Pages
         run: |
-          # Add deployment commands here (e.g., to Cloudflare Pages)
           echo "Deploying to Cloudflare Pages..."
