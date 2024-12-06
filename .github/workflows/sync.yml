@@ -24,7 +24,8 @@ jobs:
         run: |
           git remote add upstream https://github.com/coleam00/bolt.new-any-llm
           git fetch upstream
-          git merge upstream/main -m "Merge upstream changes" || { echo "Merge conflict detected or no changes"; exit 1; }
+          git merge upstream/main --allow-unrelated-histories -m "Merge upstream changes" || echo "Merge conflict detected or no changes"
+
 
       # Step 3: Push changes to your fork
       - name: Push Changes to Fork
