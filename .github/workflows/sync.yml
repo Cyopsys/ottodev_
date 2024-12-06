@@ -1,0 +1,25 @@
+name: Sync with Upstream
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Fork
+        uses: actions/checkout@v3
+        with:
+          ref: main # Replace with the default branch of your fork
+      
+      - name: Add Upstream
+        run: |
+          git remote add upstream https://github.com/coleam00/bolt.new-any-llm
+          git fetch upstream
+          git merge upstream/main -m "Merge upstream changes" || echo "No changes to merge"
+      
+      - name: Push Changes to Fork
+        run: |
+          git push origin main # Push merged changes to your fork
