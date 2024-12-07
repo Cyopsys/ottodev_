@@ -24,9 +24,21 @@ jobs:
         env:
           TOKEN: ${{ secrets.TESTING }}  # Referencing the stored token
         run: |
-          git config --global user.name "${{ github.actor || 'default-username' }}"
-          git config --global user.email "${{ github.actor || 'default-username' }}@users.noreply.github.com"
-          git push https://${TOKEN}@github.com/${{ github.repository }}.git main
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          # git push https://${TOKEN}@github.com/${{ github.repository }}.git main
+          # git push https://x-access-token:${TOKEN}@github.com/Cyopsys/ottodev.git main
+          # git push https://{{ username }}:${TOKEN}@github.com/{{ github.repository }}.git main
+          # git push https://${{ github.actor }}:${TOKEN}@github.com/{{ github.repository }}.git main
+          git remote set-url origin https://<TESTING>@github.com/${{ github.repository }}.git
+          echo ${{ secrets.TESTING }}
+          echo ${{ github.TESTING }}
+          echo [github.TESTING]
+          echo [secrets.TESTING]
+          echo <TESTING>
+          
+          git push origin main
+          echo "Token starts with: ${TOKEN:0:10}" # Ensure it is not empty
 
       # Step 3: Merges upstream changes (if any)
       - name: Add Upstream
