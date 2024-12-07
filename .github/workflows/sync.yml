@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-
+          
       # Step 2: Push Changes to Fork
       - name: Push Changes to Fork
         env:
@@ -38,8 +38,13 @@ jobs:
           # git push ${{ github.actor }}:${{ secrets.TESTING }} https://${{ github.actor }}@github.com/${{ github.repository }}.git origin main
           # git push https://${{ github.actor }}:${{ secrets.TESTING }}@github.com/${{ github.repository }}.git main
           
-          git remote set-url origin ${{ github.actor }}:${{ secrets.TESTING }}@github.com:${{ github.repository }}.git
-          git push origin main
+          # git remote set-url origin ${{ github.actor }}:${{ secrets.TESTING }}@github.com:${{ github.repository }}.git
+          # git push origin main
+          
+          git remote set-url origin https://${{ github.actor }}:${{ secrets.TESTING }}@github.com/${{ github.repository }}.git
+          echo "1.0.0" > VERSION
+          git commit -a -m "Automatic Commit"
+          git push
       
       # Step 3: Merges upstream changes (if any)
       - name: Add Upstream
