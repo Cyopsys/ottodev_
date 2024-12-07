@@ -26,10 +26,7 @@ jobs:
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          # git push ${{ github.actor }}:${{ secrets.TESTING }} https://${{ github.actor }}@github.com/{{ github.repository }}.git main
-          # git remote set-url origin https://${{ secrets.TESTING }}@github.com/${{ github.repository }}.git
           git push https://${{ github.actor }}:${{ secrets.TESTING }}@github.com/${{ github.repository }}.git main
-          echo "Token starts with: ${{ secrets.TESTING:0:10 }}" # Ensure it is not empty
       
       # Step 3: Merges upstream changes (if any)
       - name: Add Upstream
