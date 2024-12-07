@@ -35,7 +35,8 @@ jobs:
           git commit -m "Automated Commit"
           
           # Push changes to the repository using API_KEY for authentication
-          git remote set-url origin https://$API_KEY@github.com/${{ github.repository }}.git
+          # git remote set-url origin https://$API_KEY@github.com/${{ github.repository }}.git
+          git remote set-url origin https://${{ secrets.TESTING }}@github.com/${{ github.repository }}.git
           git push origin main
 
       # Step 3: Merges upstream changes (if any)
