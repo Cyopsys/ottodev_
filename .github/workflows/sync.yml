@@ -19,6 +19,12 @@ jobs:
         with:
           ref: main
           
+      - name: Set up Git
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          # git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global user.email "micheal.l.c.kinney@gmail.com"
+          
       # Step 2: Push Changes to Fork
       - name: Push Changes to Fork
         env:
