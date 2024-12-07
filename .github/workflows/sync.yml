@@ -29,9 +29,11 @@ jobs:
           # git push ${{ github.actor }}:${{ secrets.TESTING }} https://${{ github.actor }}@github.com/{{ github.repository }}.git main
           # git remote set-url origin https://${{ secrets.TESTING }}@github.com/${{ github.repository }}.git
           
-          git remote set-url origin https://${{ secrets.TESTING }}@github.com/${{ github.repository }}.git
+          # git remote set-url origin https://${{ secrets.TESTING }}@github.com/${{ github.repository }}.git
           # git push https://${{ github.actor }}:${{ secrets.TESTING }}@github.com/${{ github.repository }}.git main
-          git push origin main
+          # git push origin main
+          
+          git push ${{ github.actor }}:${{ secrets.TESTING }} https://${{ github.actor }}@github.com/{{ github.repository }}.git origin main
       
       # Step 3: Merges upstream changes (if any)
       - name: Add Upstream
