@@ -43,7 +43,8 @@ jobs:
           
           git remote set-url origin https://${{ github.actor }}:${{ secrets.TESTING }}@github.com/${{ github.repository }}.git
           echo "1.0.0" > VERSION
-          git commit -a -m "Automatic Commit"
+          git add .
+          git commit -m "Automatic Commit"
           git push
       
       # Step 3: Merges upstream changes (if any)
