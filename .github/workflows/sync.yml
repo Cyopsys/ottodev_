@@ -22,31 +22,16 @@ jobs:
       # Step 2: Push Changes to Fork
       - name: Push Changes to Fork
         env:
-          TOKEN: ${{ secrets.TESTING }}  # Referencing the stored token
+          API_KEY: ${{ secrets.TESTING }}
         run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          # git push ${{ github.actor }}:${{ secrets.TESTING }} https://${{ github.actor }}@github.com/{{ github.repository }}.git main
-          # git remote set-url origin https://${{ secrets.TESTING }}@github.com/${{ github.repository }}.git
-          # git remote set-url origin https://${{ secrets.TESTING }}@github.com/${{ github.repository }}.git
-          # git push https://${{ github.actor }}:${{ secrets.TESTING }}@github.com/${{ github.repository }}.git main
-          # git push origin main
-          # git push ${{ github.actor }}:${{ secrets.TESTING }} https://${{ github.actor }}@github.com/{{ github.repository }}.git origin main
-          # git remote set-url origin git@github.com:${{ github.repository }}.git
-          
-          # git remote set-url origin ${{ github.actor }}@github.com:${{ github.repository }}.git
-          # git push ${{ github.actor }}:${{ secrets.TESTING }} https://${{ github.actor }}@github.com/${{ github.repository }}.git origin main
-          # git push https://${{ github.actor }}:${{ secrets.TESTING }}@github.com/${{ github.repository }}.git main
-          
-          # git remote set-url origin ${{ github.actor }}:${{ secrets.TESTING }}@github.com:${{ github.repository }}.git
-          # git push origin main
-          
-          git remote set-url origin https://${{ github.actor }}:${{ secrets.TESTING }}@github.com/${{ github.repository }}.git
-          echo "1.0.0" > VERSION
+          # Add any changes
           git add .
-          git commit -m "Automatic Commit"
-          git push
-      
+          git commit -m "Automated Commit"
+          
+          # Push changes to the repository using API_KEY for authentication
+          git remote set-url origin https://$API_KEY@github.com/${{ github.repository }}.git
+          git push origin main
+
       # Step 3: Merges upstream changes (if any)
       - name: Add Upstream
         run: |
