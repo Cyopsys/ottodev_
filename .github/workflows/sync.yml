@@ -22,7 +22,7 @@ jobs:
       # Step 2: Push Changes to Fork
       - name: Push Changes to Fork
         env:
-          TOKEN: ${{ secrets.OTTODEV }}  # Referencing the stored token
+          TOKEN: ${{ secrets.TESTING }}  # Referencing the stored token
         run: |
           git config --global user.name "${{ github.actor || 'default-username' }}"
           git config --global user.email "${{ github.actor || 'default-username' }}@users.noreply.github.com"
