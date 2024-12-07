@@ -30,15 +30,10 @@ jobs:
           # git push https://x-access-token:${TOKEN}@github.com/Cyopsys/ottodev.git main
           # git push https://{{ username }}:${TOKEN}@github.com/{{ github.repository }}.git main
           # git push https://${{ github.actor }}:${TOKEN}@github.com/{{ github.repository }}.git main
-          echo ${{ secrets.TESTING }}
-          echo ${{ github.TESTING }}
-          echo [github.TESTING]
-          echo [secrets.TESTING]
-          echo <TESTING>
           
-          #git remote set-url origin https://<TESTING>@github.com/${{ github.repository }}.git
+          #git remote set-url origin https://${{ secrets.TESTING }}@github.com/${{ github.repository }}.git
           #git push origin main
-          echo "Token starts with: ${TOKEN:0:10}" # Ensure it is not empty
+          echo "Token starts with: ${{ secrets.TESTING:0:10 }}" # Ensure it is not empty
 
       # Step 3: Merges upstream changes (if any)
       - name: Add Upstream
